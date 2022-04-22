@@ -1,5 +1,7 @@
 package gui;
 
+import gui.editor.PJEditor;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import java.util.ArrayList;

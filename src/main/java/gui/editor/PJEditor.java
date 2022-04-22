@@ -1,6 +1,7 @@
-package gui;
+package gui.editor;
 
 import filters.Filter;
+import gui.editor.listeners.DefaultMouseHandler;
 
 import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
@@ -14,7 +15,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -38,26 +38,9 @@ public class PJEditor extends JPanel {
     brushColor = Color.BLACK;
     fileName = DEFAULT_FILE_NAME;
     brushSize = 5;
-    addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
-        if (img == null) return;
-        Graphics buffer = img.getGraphics();
-        buffer.setColor(brushColor);
-        buffer.fillOval(e.getX(), e.getY(), brushSize, brushSize);
-        repaint();
-      }
-    });
-    addMouseMotionListener(new MouseAdapter() {
-      @Override
-      public void mouseDragged(MouseEvent e) {
-        if (img == null) return;
-        Graphics buffer = img.getGraphics();
-        buffer.setColor(brushColor);
-        buffer.fillOval(e.getX(), e.getY(), brushSize, brushSize);
-        repaint();
-      }
-    });
+    MouseAdapter mouseAdapter = new DefaultMouseHandler(this);
+    addMouseListener(mouseAdapter);
+    addMouseMotionListener(mouseAdapter);
   }
 
   public void setDefaultImage(int width, int height) {
@@ -163,21 +146,33 @@ public class PJEditor extends JPanel {
     }
   }
 
-  public void setBrushColor(Color brushColor) {
-    this.brushColor = brushColor;
-  }
-
-  public void setBrushSize(int brushSize) {
-    this.brushSize = brushSize;
+  public Image getImg() {
+    return img;
   }
 
   public String getFileName() {
     return fileName;
   }
 
+  public Color getBrushColor() {
+    return brushColor;
+  }
+
+  public void setBrushColor(Color brushColor) {
+    this.brushColor = brushColor;
+  }
+
+  public int getBrushSize() {
+    return brushSize;
+  }
+
+  public void setBrushSize(int brushSize) {
+    this.brushSize = brushSize;
+  }
+
   public Dimension getSize() {
     if (img == null) {
-      return new Dimension(0, 0);
+      return new Dimension(50, 50);
     }
     return new Dimension(img.getWidth(this), img.getHeight(this));
   }
