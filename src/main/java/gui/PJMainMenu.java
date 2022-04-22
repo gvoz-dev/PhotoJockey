@@ -1,24 +1,27 @@
 package gui;
 
-import javax.swing.*;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PJMainMenu {
   private final JMenuBar menuBar;
-  private final PJMainWindow window;
+  private final PJApp app;
 
-  private PJMainMenu(PJMainWindow window) {
-    this.window = window;
+  private PJMainMenu(PJApp app) {
+    this.app = app;
     menuBar = createMenuBar();
   }
 
-  public static PJMainMenu create(PJMainWindow window) {
-    return new PJMainMenu(window);
+  public static PJMainMenu create(PJApp app) {
+    return new PJMainMenu(app);
   }
 
   public void show() {
-    window.getFrame().setJMenuBar(menuBar);
+    app.getFrame().setJMenuBar(menuBar);
   }
 
   private JMenuBar createMenuBar() {
@@ -38,37 +41,30 @@ public class PJMainMenu {
     JMenuItem printFile = new JMenuItem("Print...");
     JMenuItem exit = new JMenuItem("Exit");
 
-    JTabbedPane tabs = window.getTabs();
+    final PJEditorTabs tabs = app.getTabs();
     newFile.addActionListener(e -> {
       PJEditor editor = new PJEditor();
-      tabs.addTab("New image", editor);
-      editor.setDefaultImage(640, 360);
+      editor.setDefaultImage(PJEditor.DEFAULT_IMG_WIDTH, PJEditor.DEFAULT_IMG_HEIGHT);
+      tabs.addEditor(editor);
     });
     openFile.addActionListener(e -> {
       PJEditor editor = new PJEditor();
       if (editor.openFromFile()) {
-        tabs.addTab(editor.getFileName(), editor);
+        tabs.addEditor(editor);
       }
     });
     saveFile.addActionListener(e -> {
-      int index = tabs.getSelectedIndex();
-      if (index != -1) {
-        PJEditor editor = (PJEditor) tabs.getComponentAt(index);
+      PJEditor editor = tabs.getSelectedEditor();
+      if (editor != null) {
         if (editor.saveToFile()) {
-          tabs.setTitleAt(index, editor.getFileName());
+          tabs.updateTitle(editor.getFileName());
         }
       }
     });
-    closeFile.addActionListener(e -> {
-      int index = tabs.getSelectedIndex();
-      if (index != -1) {
-        tabs.remove(tabs.getSelectedIndex());
-      }
-    });
+    closeFile.addActionListener(e -> tabs.removeSelectedEditor());
     printFile.addActionListener(e -> {
-      int index = tabs.getSelectedIndex();
-      if (index != -1) {
-        PJEditor editor = (PJEditor) tabs.getComponentAt(index);
+      PJEditor editor = tabs.getSelectedEditor();
+      if (editor != null) {
         editor.printFile();
       }
     });
@@ -89,18 +85,16 @@ public class PJMainMenu {
     JMenuItem brushColor = new JMenuItem("Brush color");
     JMenuItem brushSize = new JMenuItem("Brush size");
 
-    JTabbedPane tabs = window.getTabs();
+    final PJEditorTabs tabs = app.getTabs();
     brushColor.addActionListener(e -> {
-      int index = tabs.getSelectedIndex();
-      if (index != -1) {
-        PJEditor editor = (PJEditor) tabs.getComponentAt(index);
+      PJEditor editor = tabs.getSelectedEditor();
+      if (editor != null) {
         editor.changeBrushColor();
       }
     });
     brushSize.addActionListener(e -> {
-      int index = tabs.getSelectedIndex();
-      if (index != -1) {
-        PJEditor editor = (PJEditor) tabs.getComponentAt(index);
+      PJEditor editor = tabs.getSelectedEditor();
+      if (editor != null) {
         editor.changeBrushSize();
       }
     });
@@ -117,9 +111,9 @@ public class PJMainMenu {
     JMenuItem negative = new JMenuItem("Negative");
     JMenuItem sepia = new JMenuItem("Sepia");
 
-    grayscale.addActionListener(new FilterListener(window));
-    negative.addActionListener(new FilterListener(window));
-    sepia.addActionListener(new FilterListener(window));
+    grayscale.addActionListener(new FilterListener(app));
+    negative.addActionListener(new FilterListener(app));
+    sepia.addActionListener(new FilterListener(app));
 
     filterMenu.add(grayscale);
     filterMenu.add(negative);
@@ -138,17 +132,16 @@ public class PJMainMenu {
   }
 
   static class FilterListener implements ActionListener {
-    JTabbedPane tabs;
+    PJEditorTabs tabs;
 
-    public FilterListener(PJMainWindow window) {
-      tabs = window.getTabs();
+    public FilterListener(PJApp app) {
+      tabs = app.getTabs();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      int index = tabs.getSelectedIndex();
-      if (index != -1) {
-        PJEditor editor = (PJEditor) tabs.getComponentAt(index);
+      PJEditor editor = tabs.getSelectedEditor();
+      if (editor != null) {
         editor.useFilter(e.getActionCommand());
       }
     }

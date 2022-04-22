@@ -1,9 +1,9 @@
 package gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.MenuElement;
+import java.awt.Font;
 
-public class Utils {
+public class PJUtils {
   public static void setMenuFont(MenuElement element, Font font) {
     element.getComponent().setFont(font);
     MenuElement[] menuElements = element.getSubElements();

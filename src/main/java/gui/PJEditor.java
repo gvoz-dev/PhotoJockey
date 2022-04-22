@@ -3,8 +3,16 @@ package gui;
 import filters.Filter;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JColorChooser;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -17,12 +25,19 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class PJEditor extends JPanel {
+  public static final int DEFAULT_IMG_WIDTH = 960;
+  public static final int DEFAULT_IMG_HEIGHT = 540;
+  public static final String DEFAULT_FILE_NAME = "temp_img";
+
   private Image img;
   private String fileName;
-  private Color brushColor = Color.CYAN;
-  private int brushSize = 5;
+  private Color brushColor;
+  private int brushSize;
 
   public PJEditor() {
+    brushColor = Color.BLACK;
+    fileName = DEFAULT_FILE_NAME;
+    brushSize = 5;
     addMouseListener(new MouseAdapter() {
       @Override
       public void mousePressed(MouseEvent e) {
@@ -46,7 +61,10 @@ public class PJEditor extends JPanel {
   }
 
   public void setDefaultImage(int width, int height) {
-    img = createImage(width, height);
+    if (width <= 0 || height <= 0) {
+      throw new IllegalArgumentException("width <= 0 or height <= 0!");
+    }
+    img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     Graphics g = img.getGraphics();
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, width, height);
@@ -54,11 +72,11 @@ public class PJEditor extends JPanel {
 
   @Override
   public void paintComponent(Graphics g) {
+    super.paintComponent(g);
     if (img == null) {
       g.drawString("No image...", 50, 50);
       return;
     }
-    super.paintComponent(g);
     g.drawImage(img, 0, 0, this);
   }
 
