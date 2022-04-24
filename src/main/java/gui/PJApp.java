@@ -1,6 +1,6 @@
 package gui;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
@@ -25,7 +25,7 @@ public class PJApp {
   }
 
   public static void main(String[] args) {
-    FlatIntelliJLaf.setup();
+    FlatNordIJTheme.setup();
     EventQueue.invokeLater(PJApp::new);
   }
 
