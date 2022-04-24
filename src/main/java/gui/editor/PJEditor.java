@@ -170,19 +170,11 @@ public class PJEditor extends JPanel {
     this.brushSize = brushSize;
   }
 
-  public Dimension getSize() {
+  public Dimension getPreferredSize() {
     if (img == null) {
-      return new Dimension(50, 50);
+      return new Dimension(100, 100);
     }
     return new Dimension(img.getWidth(this), img.getHeight(this));
-  }
-
-  public Dimension getPreferredSize() {
-    return getSize();
-  }
-
-  public Dimension getMinimumSize() {
-    return getSize();
   }
 }
 
