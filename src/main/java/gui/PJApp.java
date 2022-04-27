@@ -3,8 +3,8 @@ package gui;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 public class PJApp {
   private static final int DEFAULT_WIDTH = 1280;
@@ -18,15 +18,15 @@ public class PJApp {
     frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     frame.setLayout(new BorderLayout());
     tabs = new PJEditorTabs();
-    frame.add(tabs, BorderLayout.CENTER);
     PJMainMenu.create(this).show();
+    frame.add(tabs, BorderLayout.CENTER);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
   }
 
   public static void main(String[] args) {
     FlatNordIJTheme.setup();
-    EventQueue.invokeLater(PJApp::new);
+    SwingUtilities.invokeLater(PJApp::new);
   }
 
   public JFrame getFrame() {

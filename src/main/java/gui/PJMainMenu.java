@@ -1,5 +1,11 @@
 package gui;
 
+import actions.CloseFileAction;
+import actions.ExitAction;
+import actions.NewFileAction;
+import actions.OpenFileAction;
+import actions.PrintFileAction;
+import actions.SaveFileAction;
 import gui.editor.PJEditor;
 
 import javax.swing.JMenu;
@@ -10,8 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PJMainMenu {
-  private final JMenuBar menuBar;
   private final PJApp app;
+  private final JMenuBar menuBar;
 
   private PJMainMenu(PJApp app) {
     this.app = app;
@@ -36,41 +42,12 @@ public class PJMainMenu {
 
   private JMenu createFileMenu() {
     JMenu fileMenu = new JMenu("File");
-    JMenuItem newFile = new JMenuItem("New");
-    JMenuItem openFile = new JMenuItem("Open...");
-    JMenuItem saveFile = new JMenuItem("Save...");
-    JMenuItem closeFile = new JMenuItem("Close");
-    JMenuItem printFile = new JMenuItem("Print...");
-    JMenuItem exit = new JMenuItem("Exit");
-
-    final PJEditorTabs tabs = app.getTabs();
-    newFile.addActionListener(e -> {
-      PJEditor editor = new PJEditor();
-      editor.setDefaultImage(PJEditor.DEFAULT_IMG_WIDTH, PJEditor.DEFAULT_IMG_HEIGHT);
-      tabs.addEditor(editor);
-    });
-    openFile.addActionListener(e -> {
-      PJEditor editor = new PJEditor();
-      if (editor.openFromFile()) {
-        tabs.addEditor(editor);
-      }
-    });
-    saveFile.addActionListener(e -> {
-      PJEditor editor = tabs.getSelectedEditor();
-      if (editor != null) {
-        if (editor.saveToFile()) {
-          tabs.updateTitle(editor.getFileName());
-        }
-      }
-    });
-    closeFile.addActionListener(e -> tabs.removeSelectedEditor());
-    printFile.addActionListener(e -> {
-      PJEditor editor = tabs.getSelectedEditor();
-      if (editor != null) {
-        editor.printFile();
-      }
-    });
-    exit.addActionListener(e -> System.exit(0));
+    JMenuItem newFile = new JMenuItem(new NewFileAction(app, "New", null, null, null, null));
+    JMenuItem openFile = new JMenuItem(new OpenFileAction(app, "Open...", null, null, null, null));
+    JMenuItem saveFile = new JMenuItem(new SaveFileAction(app, "Save...", null, null, null, null));
+    JMenuItem closeFile = new JMenuItem(new CloseFileAction(app, "Close", null, null, null, null));
+    JMenuItem printFile = new JMenuItem(new PrintFileAction(app, "Print...", null, null, null, null));
+    JMenuItem exit = new JMenuItem(new ExitAction(app, "Exit", null, null, null, null));
 
     fileMenu.add(newFile);
     fileMenu.add(openFile);
@@ -127,7 +104,7 @@ public class PJMainMenu {
     JMenu helpMenu = new JMenu("Help");
     JMenuItem about = new JMenuItem("About");
 
-    about.addActionListener(e -> JOptionPane.showMessageDialog(null, "PhotoJockey Alpha 2022", "About", JOptionPane.INFORMATION_MESSAGE));
+    about.addActionListener(e -> JOptionPane.showMessageDialog(null, "PhotoJockey 2022 Prototype", "About", JOptionPane.INFORMATION_MESSAGE));
 
     helpMenu.add(about);
     return helpMenu;

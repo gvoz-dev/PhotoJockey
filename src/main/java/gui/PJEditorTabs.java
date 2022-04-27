@@ -37,10 +37,10 @@ public class PJEditorTabs extends JTabbedPane {
     return null;
   }
 
-  public void updateTitle(String newTitle) {
+  public void setTabTitle(String title) {
     int index = getSelectedIndex();
     if (index != -1) {
-      setTitleAt(index, newTitle);
+      setTitleAt(index, title);
     }
   }
 }
