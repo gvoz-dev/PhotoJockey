@@ -1,6 +1,8 @@
-package gui;
+package ui;
 
-import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
+import ui.editor.PJEditorTabs;
+import ui.menu.PJMainMenu;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -25,7 +27,7 @@ public class PJApp {
   }
 
   public static void main(String[] args) {
-    FlatNordIJTheme.setup();
+    FlatCarbonIJTheme.setup();
     SwingUtilities.invokeLater(PJApp::new);
   }
 

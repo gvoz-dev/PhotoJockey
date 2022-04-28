@@ -1,31 +1,19 @@
 package actions;
 
+import ui.PJApp;
+
 import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
 
-public abstract class PJAction extends AbstractAction {
-  public PJAction() {
+public class PJAction extends AbstractAction {
+  protected PJApp app;
+
+  public PJAction() {}
+
+  public PJAction(PJApp app) {
+    this.app = app;
   }
 
-  public PJAction(String name) {
-    putValue(Action.NAME, name);
-  }
-
-  public PJAction(String name, Icon icon) {
-    this(name);
-    putValue(Action.SMALL_ICON, icon);
-  }
-
-  public PJAction(String name, Icon icon, String description) {
-    this(name, icon);
-    putValue(Action.SHORT_DESCRIPTION, description);
-  }
-
-  public PJAction(String name, Icon icon, String description, KeyStroke accelerator, Integer mnemonic) {
-    this(name, icon, description);
-    putValue(Action.ACCELERATOR_KEY, accelerator); //KeyStroke.getKeyStroke(accelerator)
-    putValue(Action.MNEMONIC_KEY, mnemonic); //KeyEvent.getExtendedKeyCodeForChar(mnemonic)
-  }
+  @Override
+  public void actionPerformed(ActionEvent e) {}
 }

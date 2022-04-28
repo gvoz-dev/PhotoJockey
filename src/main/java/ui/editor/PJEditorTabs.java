@@ -1,6 +1,4 @@
-package gui;
-
-import gui.editor.PJEditor;
+package ui.editor;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;

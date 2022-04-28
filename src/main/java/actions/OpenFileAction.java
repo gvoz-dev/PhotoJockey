@@ -1,18 +1,13 @@
 package actions;
 
-import gui.PJApp;
-import gui.editor.PJEditor;
+import ui.PJApp;
+import ui.editor.PJEditor;
 
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
 import java.awt.event.ActionEvent;
 
 public class OpenFileAction extends PJAction {
-  PJApp app;
-
-  public OpenFileAction(PJApp app, String name, Icon icon, String description, KeyStroke accelerator, Integer mnemonic) {
-    super(name, icon, description, accelerator, mnemonic);
-    this.app = app;
+  public OpenFileAction(PJApp app) {
+    super(app);
   }
 
   @Override

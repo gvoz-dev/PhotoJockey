@@ -1,6 +1,6 @@
-package gui.editor.listeners;
+package ui.editor.listeners;
 
-import gui.editor.PJEditor;
+import ui.editor.PJEditor;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;

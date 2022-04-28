@@ -1,4 +1,4 @@
-package gui;
+package ui;
 
 import javax.swing.MenuElement;
 import java.awt.Font;

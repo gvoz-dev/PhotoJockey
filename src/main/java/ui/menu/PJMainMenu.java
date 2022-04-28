@@ -1,12 +1,10 @@
-package gui;
+package ui.menu;
 
-import actions.CloseFileAction;
-import actions.ExitAction;
-import actions.NewFileAction;
-import actions.OpenFileAction;
-import actions.PrintFileAction;
-import actions.SaveFileAction;
-import gui.editor.PJEditor;
+import ui.PJApp;
+import ui.editor.PJEditorTabs;
+import ui.editor.PJEditor;
+import ui.menu.utils.XMLMenuLoader;
+import org.xml.sax.SAXException;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -14,6 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class PJMainMenu {
   private final PJApp app;
@@ -33,34 +33,23 @@ public class PJMainMenu {
   }
 
   private JMenuBar createMenuBar() {
-    JMenuBar menuBar = new JMenuBar();
-    menuBar.add(createFileMenu());
+    JMenuBar menuBar;
+    try {
+      InputStream stream = getClass().getClassLoader().getResourceAsStream("ui/MainMenu.xml");
+      XMLMenuLoader loader = new XMLMenuLoader(app, stream);
+      loader.parse();
+      menuBar = loader.getMenuBar("MainMenu");
+    } catch (IOException | SAXException e) {
+      throw new RuntimeException(e);
+    }
+
     menuBar.add(createEditMenu());
     menuBar.add(createHelpMenu());
     return menuBar;
   }
 
-  private JMenu createFileMenu() {
-    JMenu fileMenu = new JMenu("File");
-    JMenuItem newFile = new JMenuItem(new NewFileAction(app, "New", null, null, null, null));
-    JMenuItem openFile = new JMenuItem(new OpenFileAction(app, "Open...", null, null, null, null));
-    JMenuItem saveFile = new JMenuItem(new SaveFileAction(app, "Save...", null, null, null, null));
-    JMenuItem closeFile = new JMenuItem(new CloseFileAction(app, "Close", null, null, null, null));
-    JMenuItem printFile = new JMenuItem(new PrintFileAction(app, "Print...", null, null, null, null));
-    JMenuItem exit = new JMenuItem(new ExitAction(app, "Exit", null, null, null, null));
-
-    fileMenu.add(newFile);
-    fileMenu.add(openFile);
-    fileMenu.add(saveFile);
-    fileMenu.add(closeFile);
-    fileMenu.add(printFile);
-    fileMenu.addSeparator();
-    fileMenu.add(exit);
-    return fileMenu;
-  }
-
   private JMenu createEditMenu() {
-    JMenu editMenu = new JMenu("Edit");
+    JMenu editMenu = new JMenu("Old edit");
     JMenuItem brushColor = new JMenuItem("Brush color");
     JMenuItem brushSize = new JMenuItem("Brush size");
 

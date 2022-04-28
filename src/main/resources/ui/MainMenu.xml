@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menuBar id="MainMenu">
+    <menu id="FileMenu" text="File" mnemonic="F">
+        <item id="NewFile"
+              action="actions.NewFileAction"
+              text="New"
+              description="Create a new file"
+              accelerator="ctrl N"
+              mnemonic="N"
+        />
+        <item id="OpenFile"
+              action="actions.OpenFileAction"
+              text="Open..."
+              description="Open a file"
+              mnemonic="O"
+        />
+        <item id="SaveFile"
+              action="actions.SaveFileAction"
+              text="Save..."
+              description="Save current file"
+              accelerator="ctrl S"
+              mnemonic="S"
+        />
+        <item id="CloseFile"
+              action="actions.CloseFileAction"
+              text="Close"
+              description="Close current file"
+              accelerator="ctrl W"
+        />
+        <separator/>
+        <item id="PrintFile"
+              action="actions.PrintFileAction"
+              text="Print..."
+              description="Print file"
+              mnemonic="P"
+        />
+        <separator/>
+        <item id="Exit"
+              action="actions.ExitAction"
+              text="Exit"
+              description="Quit"
+              accelerator="ctrl Q"
+              mnemonic="X"
+        />
+    </menu>
+    <menu id="EditMenu" text="Edit" mnemonic="E">
+        <item id="Undo"
+              text="Undo"
+              description="Undo"
+              accelerator="ctrl Z"
+              mnemonic="U"
+              enabled="false"
+        />
+        <item id="Redo"
+              text="Redo"
+              description="Redo"
+              accelerator="ctrl shift Z"
+              mnemonic="R"
+              enabled="false"
+        />
+    </menu>
+</menuBar>

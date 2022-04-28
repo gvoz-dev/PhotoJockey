@@ -1,7 +1,7 @@
-package gui.editor;
+package ui.editor;
 
 import filters.Filter;
-import gui.editor.listeners.DefaultMouseHandler;
+import ui.editor.listeners.DefaultMouseHandler;
 
 import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
