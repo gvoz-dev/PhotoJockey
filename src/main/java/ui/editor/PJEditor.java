@@ -27,7 +27,7 @@ import java.lang.reflect.InvocationTargetException;
 public class PJEditor extends JPanel {
   public static final int DEFAULT_IMG_WIDTH = 960;
   public static final int DEFAULT_IMG_HEIGHT = 540;
-  public static final String DEFAULT_FILE_NAME = "temp_img";
+  public static final String DEFAULT_FILE_NAME = "temp.png";
 
   private BufferedImage img;
   private String fileName;
@@ -56,29 +56,7 @@ public class PJEditor extends JPanel {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    if (img == null) {
-      g.drawString("No image...", 50, 50);
-      return;
-    }
     g.drawImage(img, 0, 0, this);
-  }
-
-  public boolean openFromFile() {
-    JFileChooser chooser = new JFileChooser(".");
-    chooser.showOpenDialog(this);
-    if (chooser.getSelectedFile() == null) {
-      return false;
-    }
-    File input = chooser.getSelectedFile();
-    fileName = input.getName();
-    try {
-      img = ImageIO.read(input);
-      repaint();
-    } catch (IOException e) {
-      System.err.println("Unable to load image file!");
-      return false;
-    }
-    return true;
   }
 
   public boolean saveToFile() {
@@ -150,8 +128,17 @@ public class PJEditor extends JPanel {
     return img;
   }
 
+  public void setImg(BufferedImage img) {
+    this.img = img;
+    repaint();
+  }
+
   public String getFileName() {
     return fileName;
+  }
+
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
   }
 
   public Color getBrushColor() {
