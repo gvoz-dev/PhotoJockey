@@ -1,5 +1,7 @@
 package actions;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ui.PJApp;
 import ui.editor.PJEditor;
 
@@ -11,6 +13,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class OpenFileAction extends PJAction {
+  private static final Logger logger = LogManager.getLogger(OpenFileAction.class);
+
   public OpenFileAction(PJApp app) {
     super(app);
   }
@@ -34,12 +38,14 @@ public class OpenFileAction extends PJAction {
           PJEditor editor = new PJEditor();
           editor.setImg(img);
           editor.setFileName(fileName);
+          logger.info(String.format("Image %s loaded.", fileName));
           return Optional.of(editor);
         }
       } catch (IOException e) {
-        System.err.println("Unable to load image file!");
+        logger.error("Image read exception:", e);
       }
     }
+    logger.warn("Unable to load image file!");
     return Optional.empty();
   }
 }
