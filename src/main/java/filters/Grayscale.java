@@ -1,13 +1,14 @@
 package filters;
 
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.RGBImageFilter;
 
 public class Grayscale extends RGBImageFilter implements Filter {
   @Override
-  public Image filter(Component component, Image image) {
+  public BufferedImage filter(JComponent component, BufferedImage image) {
     Image img = component.createImage(new FilteredImageSource(image.getSource(), this));
     BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
     bufferedImage.getGraphics().drawImage(img, 0, 0, null);

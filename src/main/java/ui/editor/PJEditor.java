@@ -29,7 +29,7 @@ public class PJEditor extends JPanel {
   public static final int DEFAULT_IMG_HEIGHT = 540;
   public static final String DEFAULT_FILE_NAME = "temp_img";
 
-  private Image img;
+  private BufferedImage img;
   private String fileName;
   private Color brushColor;
   private int brushSize;

@@ -1,7 +1,8 @@
 package filters;
 
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.image.BufferedImage;
 
 public interface Filter {
-  Image filter(Component component, Image image);
+  BufferedImage filter(JComponent component, BufferedImage image);
 }
