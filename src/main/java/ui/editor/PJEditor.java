@@ -13,10 +13,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.lang.reflect.InvocationTargetException;
 
 public class PJEditor extends JPanel {
@@ -52,25 +48,6 @@ public class PJEditor extends JPanel {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(img, 0, 0, this);
-  }
-
-  public void printFile() {
-    PrinterJob printerJob = PrinterJob.getPrinterJob();
-    if (!printerJob.printDialog()) return;
-    PageFormat pageFormat = printerJob.defaultPage();
-    pageFormat = printerJob.pageDialog(pageFormat);
-    printerJob.setPrintable((graphics, pf, pageIndex) -> {
-      if (pageIndex != 0) {
-        return Printable.NO_SUCH_PAGE;
-      }
-      graphics.drawImage(img, (int) pf.getImageableX(), (int) pf.getImageableY(), img.getWidth(null), img.getHeight(null), null);
-      return Printable.PAGE_EXISTS;
-    }, pageFormat);
-    try {
-      printerJob.print();
-    } catch (PrinterException e) {
-      System.err.println("Unable to print image file!");
-    }
   }
 
   public void useFilter(String name) {

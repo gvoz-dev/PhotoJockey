@@ -50,7 +50,6 @@ public class SaveFileAction extends PJAction {
         logger.error("Image write exception:", e);
       }
     }
-    logger.warn("Unable to save image file!");
     return Optional.empty();
   }
 }

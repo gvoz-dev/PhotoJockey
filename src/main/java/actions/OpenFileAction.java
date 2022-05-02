@@ -46,7 +46,6 @@ public class OpenFileAction extends PJAction {
         logger.error("Image read exception:", e);
       }
     }
-    logger.warn("Unable to load image file!");
     return Optional.empty();
   }
 }
