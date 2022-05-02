@@ -55,16 +55,12 @@ public class PJMainMenu {
 
     final PJEditorTabs tabs = app.getTabs();
     brushColor.addActionListener(e -> {
-      PJEditor editor = tabs.getSelectedEditor();
-      if (editor != null) {
-        editor.changeBrushColor();
-      }
+      var editor = tabs.getSelectedEditor();
+      editor.ifPresent(PJEditor::changeBrushColor);
     });
     brushSize.addActionListener(e -> {
-      PJEditor editor = tabs.getSelectedEditor();
-      if (editor != null) {
-        editor.changeBrushSize();
-      }
+      var editor = tabs.getSelectedEditor();
+      editor.ifPresent(PJEditor::changeBrushSize);
     });
 
     editMenu.add(brushColor);
@@ -108,10 +104,8 @@ public class PJMainMenu {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      PJEditor editor = tabs.getSelectedEditor();
-      if (editor != null) {
-        editor.useFilter(e.getActionCommand());
-      }
+      var editor = tabs.getSelectedEditor();
+      editor.ifPresent(pjEditor -> pjEditor.useFilter(e.getActionCommand()));
     }
   }
 }

@@ -22,11 +22,12 @@ public class OpenFileAction extends PJAction {
   @Override
   public void actionPerformed(ActionEvent e) {
     Optional<PJEditor> editorOptional = openFile();
-    editorOptional.ifPresent(pjEditor -> app.getTabs().addEditor(pjEditor));
+    editorOptional.ifPresent(pjEditor -> app.getTabs().addEditorTab(pjEditor));
   }
 
   public Optional<PJEditor> openFile() {
     JFileChooser chooser = new JFileChooser();
+    chooser.setDialogType(JFileChooser.OPEN_DIALOG);
     int res = chooser.showOpenDialog(app.getFrame());
 
     if (res == JFileChooser.APPROVE_OPTION) {

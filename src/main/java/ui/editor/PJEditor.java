@@ -3,25 +3,20 @@ package ui.editor;
 import filters.Filter;
 import ui.editor.listeners.DefaultMouseHandler;
 
-import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class PJEditor extends JPanel {
@@ -57,25 +52,6 @@ public class PJEditor extends JPanel {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(img, 0, 0, this);
-  }
-
-  public boolean saveToFile() {
-    JFileChooser chooser = new JFileChooser(".");
-    chooser.showSaveDialog(this);
-    if (chooser.getSelectedFile() == null) {
-      return false;
-    }
-    File output = chooser.getSelectedFile();
-    fileName = output.getName();
-    try {
-      BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
-      bufferedImage.getGraphics().drawImage(img, 0, 0, null);
-      ImageIO.write(bufferedImage, "png", output);
-    } catch (IOException e) {
-      System.err.println("Unable to save image file!");
-      return false;
-    }
-    return true;
   }
 
   public void printFile() {
@@ -124,7 +100,7 @@ public class PJEditor extends JPanel {
     }
   }
 
-  public Image getImg() {
+  public BufferedImage getImg() {
     return img;
   }
 
