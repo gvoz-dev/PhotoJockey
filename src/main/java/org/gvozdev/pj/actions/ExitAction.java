@@ -1,6 +1,6 @@
-package actions;
+package org.gvozdev.pj.actions;
 
-import ui.PJApp;
+import org.gvozdev.pj.PJApp;
 
 import java.awt.event.ActionEvent;
 

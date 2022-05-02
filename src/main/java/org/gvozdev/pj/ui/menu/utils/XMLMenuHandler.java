@@ -1,9 +1,9 @@
-package ui.menu.utils;
+package org.gvozdev.pj.ui.menu.utils;
 
-import actions.PJAction;
+import org.gvozdev.pj.actions.PJAction;
+import org.gvozdev.pj.PJApp;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-import ui.PJApp;
 
 import javax.swing.Action;
 import javax.swing.Icon;

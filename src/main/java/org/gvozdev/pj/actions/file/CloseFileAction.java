@@ -1,8 +1,9 @@
-package actions;
+package org.gvozdev.pj.actions.file;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ui.PJApp;
+import org.gvozdev.pj.PJApp;
+import org.gvozdev.pj.actions.PJAction;
 
 import java.awt.event.ActionEvent;
 

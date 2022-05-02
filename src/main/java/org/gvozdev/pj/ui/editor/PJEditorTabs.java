@@ -1,4 +1,4 @@
-package ui.editor;
+package org.gvozdev.pj.ui.editor;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;

@@ -1,6 +1,6 @@
-package ui.editor.listeners;
+package org.gvozdev.pj.ui.editor.handlers;
 
-import ui.editor.PJEditor;
+import org.gvozdev.pj.ui.editor.PJEditor;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
@@ -9,7 +9,7 @@ import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class DefaultMouseHandler extends MouseAdapter {
+public class DefaultPenHandler extends MouseAdapter {
   private final PJEditor editor;
   private Graphics2D g2d;
   private int x1;
@@ -17,7 +17,7 @@ public class DefaultMouseHandler extends MouseAdapter {
   private int x2;
   private int y2;
 
-  public DefaultMouseHandler(PJEditor editor) {
+  public DefaultPenHandler(PJEditor editor) {
     this.editor = editor;
   }
 

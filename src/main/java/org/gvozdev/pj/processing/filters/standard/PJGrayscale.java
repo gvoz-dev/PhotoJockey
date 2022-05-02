@@ -1,4 +1,4 @@
-package filters;
+package org.gvozdev.pj.processing.filters.standard;
 
 import javax.swing.JComponent;
 import java.awt.Image;
@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.RGBImageFilter;
 
-public class Negative extends RGBImageFilter implements Filter {
+public class PJGrayscale extends RGBImageFilter implements PJFilter {
   @Override
   public BufferedImage filter(JComponent component, BufferedImage image) {
     Image img = component.createImage(new FilteredImageSource(image.getSource(), this));
@@ -17,9 +17,12 @@ public class Negative extends RGBImageFilter implements Filter {
 
   @Override
   public int filterRGB(int x, int y, int rgb) {
-    int r = 0xff - (rgb >> 16) & 0xff;
-    int g = 0xff - (rgb >> 8) & 0xff;
-    int b = 0xff - rgb & 0xff;
-    return (0xff000000 | r << 16 | g << 8 | b);
+    int inR = (rgb >> 16) & 0xff;
+    int inG = (rgb >> 8) & 0xff;
+    int inB = rgb & 0xff;
+    int outR = (inR + inG + inB) / 3;
+    int outG = (inR + inG + inB) / 3;
+    int outB = (inR + inG + inB) / 3;
+    return (0xff000000 | outR << 16 | outG << 8 | outB);
   }
 }

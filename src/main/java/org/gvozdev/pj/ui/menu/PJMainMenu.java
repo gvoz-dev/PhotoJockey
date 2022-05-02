@@ -1,9 +1,9 @@
-package ui.menu;
+package org.gvozdev.pj.ui.menu;
 
-import ui.PJApp;
-import ui.editor.PJEditorTabs;
-import ui.editor.PJEditor;
-import ui.menu.utils.XMLMenuLoader;
+import org.gvozdev.pj.PJApp;
+import org.gvozdev.pj.ui.editor.PJEditor;
+import org.gvozdev.pj.ui.editor.PJEditorTabs;
+import org.gvozdev.pj.ui.menu.utils.XMLMenuLoader;
 import org.xml.sax.SAXException;
 
 import javax.swing.JMenu;

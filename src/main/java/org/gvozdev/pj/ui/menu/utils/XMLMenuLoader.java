@@ -1,6 +1,6 @@
-package ui.menu.utils;
+package org.gvozdev.pj.ui.menu.utils;
 
-import ui.PJApp;
+import org.gvozdev.pj.PJApp;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

@@ -1,7 +1,7 @@
-package ui.editor;
+package org.gvozdev.pj.ui.editor;
 
-import filters.Filter;
-import ui.editor.listeners.DefaultMouseHandler;
+import org.gvozdev.pj.processing.filters.standard.PJFilter;
+import org.gvozdev.pj.ui.editor.handlers.DefaultPenHandler;
 
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
@@ -29,7 +29,7 @@ public class PJEditor extends JPanel {
     brushColor = Color.BLACK;
     fileName = DEFAULT_FILE_NAME;
     brushSize = 5;
-    MouseAdapter mouseAdapter = new DefaultMouseHandler(this);
+    MouseAdapter mouseAdapter = new DefaultPenHandler(this);
     addMouseListener(mouseAdapter);
     addMouseMotionListener(mouseAdapter);
   }
@@ -52,7 +52,7 @@ public class PJEditor extends JPanel {
 
   public void useFilter(String name) {
     try {
-      Filter filter = (Filter) (Class.forName("filters." + name)).getConstructor().newInstance();
+      PJFilter filter = (PJFilter) (Class.forName("org.gvozdev.pj.processing.filters.standard.PJ" + name)).getConstructor().newInstance();
       img = filter.filter(this, img);
       repaint();
     } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException |

@@ -1,8 +1,8 @@
-package ui;
+package org.gvozdev.pj;
 
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
-import ui.editor.PJEditorTabs;
-import ui.menu.PJMainMenu;
+import org.gvozdev.pj.ui.editor.PJEditorTabs;
+import org.gvozdev.pj.ui.menu.PJMainMenu;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
