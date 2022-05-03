@@ -2,6 +2,7 @@ package org.gvozdev.pj.ui.menu.utils;
 
 import org.gvozdev.pj.actions.PJAction;
 import org.gvozdev.pj.PJApp;
+import org.gvozdev.pj.utils.SVGImageLoader;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -14,6 +15,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Deque;
@@ -34,6 +36,9 @@ public class XMLMenuHandler extends DefaultHandler {
   private static final String ATTRIBUTE_ACCELERATOR = "accelerator";
   private static final String ATTRIBUTE_MNEMONIC = "mnemonic";
   private static final String ATTRIBUTE_ENABLED = "enabled";
+
+  private static final float ICON_WIDTH = 16;
+  private static final float ICON_HEIGHT = 16;
 
   private final PJApp app;
   private final Map<String, JComponent> menuStorage;
@@ -87,6 +92,7 @@ public class XMLMenuHandler extends DefaultHandler {
     String id = attributes.getValue(ATTRIBUTE_ID);
     menuStorage.put(id, menuItem);
     adjustProperties(menuItem, attributes);
+
     if (menus.peek() != null) {
       menus.peek().add(menuItem);
     }
@@ -107,17 +113,20 @@ public class XMLMenuHandler extends DefaultHandler {
     String mnemonic = attributes.getValue(ATTRIBUTE_MNEMONIC);
     String enabled = attributes.getValue(ATTRIBUTE_ENABLED);
 
-    Action action = loadAction(actionClass);
+    PJAction action = loadAction(actionClass);
     if (text != null) {
       action.putValue(Action.NAME, text);
     }
     if (iconPath != null) {
       URL imgURL = getClass().getClassLoader().getResource(iconPath);
-      Icon icon = null;
       if (imgURL != null) {
-        icon = new ImageIcon(imgURL);
+        try {
+          Icon icon = new ImageIcon(SVGImageLoader.loadSVG(imgURL, ICON_WIDTH, ICON_HEIGHT));
+          action.putValue(Action.SMALL_ICON, icon);
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
       }
-      action.putValue(Action.SMALL_ICON, icon);
     }
     if (description != null) {
       action.putValue(Action.SHORT_DESCRIPTION, description);
@@ -135,7 +144,7 @@ public class XMLMenuHandler extends DefaultHandler {
     menuItem.setAction(action);
   }
 
-  private Action loadAction(String name) {
+  private PJAction loadAction(String name) {
     PJAction action;
     if (name != null) {
       try {
