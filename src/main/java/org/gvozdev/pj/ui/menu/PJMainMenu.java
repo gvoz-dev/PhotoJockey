@@ -9,9 +9,6 @@ import org.xml.sax.SAXException;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -43,13 +40,12 @@ public class PJMainMenu {
       throw new RuntimeException(e);
     }
 
-    menuBar.add(createEditMenu());
-    menuBar.add(createHelpMenu());
+    menuBar.add(createEditMenu()); //TODO: remove
     return menuBar;
   }
 
   private JMenu createEditMenu() {
-    JMenu editMenu = new JMenu("Old edit");
+    JMenu editMenu = new JMenu("...");
     JMenuItem brushColor = new JMenuItem("Brush color");
     JMenuItem brushSize = new JMenuItem("Brush size");
 
@@ -65,47 +61,6 @@ public class PJMainMenu {
 
     editMenu.add(brushColor);
     editMenu.add(brushSize);
-    editMenu.add(createFilterSubMenu());
     return editMenu;
-  }
-
-  private JMenu createFilterSubMenu() {
-    JMenu filterMenu = new JMenu("Filter");
-    JMenuItem grayscale = new JMenuItem("Grayscale");
-    JMenuItem negative = new JMenuItem("Negative");
-    JMenuItem sepia = new JMenuItem("Sepia");
-
-    grayscale.addActionListener(new FilterListener(app));
-    negative.addActionListener(new FilterListener(app));
-    sepia.addActionListener(new FilterListener(app));
-
-    filterMenu.add(grayscale);
-    filterMenu.add(negative);
-    filterMenu.add(sepia);
-    return filterMenu;
-  }
-
-  private JMenu createHelpMenu() {
-    JMenu helpMenu = new JMenu("Help");
-    JMenuItem about = new JMenuItem("About");
-
-    about.addActionListener(e -> JOptionPane.showMessageDialog(null, "PhotoJockey 2022 Prototype", "About", JOptionPane.INFORMATION_MESSAGE));
-
-    helpMenu.add(about);
-    return helpMenu;
-  }
-
-  static class FilterListener implements ActionListener {
-    PJEditorTabs tabs;
-
-    public FilterListener(PJApp app) {
-      tabs = app.getTabs();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      var editor = tabs.getSelectedEditor();
-      editor.ifPresent(pjEditor -> pjEditor.useFilter(e.getActionCommand()));
-    }
   }
 }

@@ -65,5 +65,42 @@
               mnemonic="R"
               enabled="false"
         />
+        <separator/>
+        <item id="Settings"
+              text="Settings..."
+              icon="icons/menu/settings/settings_dark.svg"
+              description="Edit application settings"
+              accelerator="ctrl alt S"
+              mnemonic="S"
+              enabled="false"
+        />
+    </menu>
+    <menu id="FiltersMenu" text="Filters" mnemonic="S">
+        <menu id="StandardFilters" text="Standard" mnemonic="S">
+            <item id="PJGrayscale"
+                  action="org.gvozdev.pj.actions.filters.StandardFilterAction"
+                  text="Grayscale"
+                  description="Grayscale"
+            />
+            <item id="PJNegative"
+                  action="org.gvozdev.pj.actions.filters.StandardFilterAction"
+                  text="Negative"
+                  description="Negative"
+            />
+            <item id="PJSepia"
+                  action="org.gvozdev.pj.actions.filters.StandardFilterAction"
+                  text="Sepia"
+                  description="Sepia"
+            />
+        </menu>
+    </menu>
+    <menu id="HelpMenu" text="Help" mnemonic="H">
+        <item id="About"
+              action="org.gvozdev.pj.actions.AboutAction"
+              text="About"
+              icon="icons/menu/help/help_dark.svg"
+              description="Show info about PhotoJockey"
+              mnemonic="A"
+        />
     </menu>
 </menuBar>

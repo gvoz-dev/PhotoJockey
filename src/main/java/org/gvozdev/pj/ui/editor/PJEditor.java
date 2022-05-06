@@ -1,6 +1,5 @@
 package org.gvozdev.pj.ui.editor;
 
-import org.gvozdev.pj.processing.filters.standard.PJFilter;
 import org.gvozdev.pj.ui.editor.handlers.DefaultPenHandler;
 
 import javax.swing.JColorChooser;
@@ -13,7 +12,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.InvocationTargetException;
 
 public class PJEditor extends JPanel {
   public static final int DEFAULT_IMG_WIDTH = 960;
@@ -48,17 +46,6 @@ public class PJEditor extends JPanel {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawImage(img, 0, 0, this);
-  }
-
-  public void useFilter(String name) {
-    try {
-      PJFilter filter = (PJFilter) (Class.forName("org.gvozdev.pj.processing.filters.standard.PJ" + name)).getConstructor().newInstance();
-      img = filter.filter(this, img);
-      repaint();
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException |
-             ClassNotFoundException e) {
-      e.printStackTrace();
-    }
   }
 
   public void changeBrushColor() {
