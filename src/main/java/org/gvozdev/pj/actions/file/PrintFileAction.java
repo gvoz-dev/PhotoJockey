@@ -52,9 +52,9 @@ public class PrintFileAction extends PJAction {
 
       try {
         printerJob.print();
-        logger.info(String.format("Image %s printed.", editor.getFileName()));
+        logger.info(String.format("Image '%s' printed.", editor.getFileName()));
       } catch (PrinterException e) {
-        logger.error("Image print exception:", e);
+        logger.error("Image print error:", e);
       }
     }
   }

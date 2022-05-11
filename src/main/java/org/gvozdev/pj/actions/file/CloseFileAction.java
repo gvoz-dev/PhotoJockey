@@ -20,7 +20,7 @@ public class CloseFileAction extends PJAction {
     if (editorOptional.isPresent()) {
       var fileName = editorOptional.get().getFileName();
       app.getTabs().removeSelectedEditorTab();
-      logger.info(String.format("Image %s closed.", fileName));
+      logger.info(String.format("Image '%s' closed.", fileName));
     }
   }
 }

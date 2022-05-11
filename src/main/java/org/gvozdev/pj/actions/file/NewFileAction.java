@@ -17,7 +17,7 @@ public class NewFileAction extends PJAction {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    PJEditor editor = new PJEditor();
+    PJEditor editor = new PJEditor(app.getTools());
     editor.setDefaultImage(PJEditor.DEFAULT_IMG_WIDTH, PJEditor.DEFAULT_IMG_HEIGHT);
     app.getTabs().addEditorTab(editor);
     logger.info("Image created.");

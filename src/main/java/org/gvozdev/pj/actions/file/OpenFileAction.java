@@ -37,14 +37,14 @@ public class OpenFileAction extends PJAction {
         var img = ImageIO.read(file);
         if (img != null) {
           var fileName = file.getName();
-          PJEditor editor = new PJEditor();
+          PJEditor editor = new PJEditor(app.getTools());
           editor.setImg(img);
           editor.setFileName(fileName);
-          logger.info(String.format("Image %s loaded.", fileName));
+          logger.info(String.format("Image '%s' loaded.", fileName));
           return Optional.of(editor);
         }
       } catch (IOException e) {
-        logger.error("Image read exception:", e);
+        logger.error("Image read error:", e);
       }
     }
     return Optional.empty();

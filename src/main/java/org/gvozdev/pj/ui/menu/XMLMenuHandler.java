@@ -1,4 +1,4 @@
-package org.gvozdev.pj.ui.menu.utils;
+package org.gvozdev.pj.ui.menu;
 
 import org.gvozdev.pj.actions.PJAction;
 import org.gvozdev.pj.PJApp;

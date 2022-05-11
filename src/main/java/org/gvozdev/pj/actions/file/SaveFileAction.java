@@ -44,11 +44,11 @@ public class SaveFileAction extends PJAction {
           ImageIO.write(img, "png", file);
           var fileName = file.getName();
           editor.setFileName(fileName);
-          logger.info(String.format("Image %s saved.", fileName));
+          logger.info(String.format("Image '%s' saved.", fileName));
           return Optional.of(fileName);
         }
       } catch (IOException e) {
-        logger.error("Image write exception:", e);
+        logger.error("Image write error:", e);
       }
     }
     return Optional.empty();
