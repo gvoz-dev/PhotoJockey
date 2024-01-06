@@ -5,6 +5,9 @@ plugins {
 group 'org.gvozdev.pj'
 version '1.0-SNAPSHOT'
 
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
 repositories {
     mavenCentral()
 }
@@ -17,6 +20,7 @@ dependencies {
     implementation 'org.apache.xmlgraphics:batik-transcoder:1.14'
     implementation 'com.formdev:flatlaf:2.2'
     implementation 'com.formdev:flatlaf-intellij-themes:2.2'
+    implementation group: 'org.openpnp', name: 'opencv', version: '4.9.0-0'
 }
 
 test {

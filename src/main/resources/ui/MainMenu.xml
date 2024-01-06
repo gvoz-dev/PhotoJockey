@@ -78,17 +78,17 @@
     <menu id="FiltersMenu" text="Filters" mnemonic="S">
         <menu id="StandardFilters" text="Standard" mnemonic="S">
             <item id="PJGrayscale"
-                  action="org.gvozdev.pj.actions.filters.StandardFilterAction"
+                  action="org.gvozdev.pj.actions.filters.ColorFilterAction"
                   text="Grayscale"
                   description="Grayscale"
             />
             <item id="PJNegative"
-                  action="org.gvozdev.pj.actions.filters.StandardFilterAction"
+                  action="org.gvozdev.pj.actions.filters.ColorFilterAction"
                   text="Negative"
                   description="Negative"
             />
             <item id="PJSepia"
-                  action="org.gvozdev.pj.actions.filters.StandardFilterAction"
+                  action="org.gvozdev.pj.actions.filters.ColorFilterAction"
                   text="Sepia"
                   description="Sepia"
             />
