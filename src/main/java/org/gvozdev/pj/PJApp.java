@@ -2,52 +2,26 @@ package org.gvozdev.pj;
 
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
 import nu.pattern.OpenCV;
-import org.gvozdev.pj.ui.editor.PJEditorTabs;
-import org.gvozdev.pj.ui.menu.PJMainMenu;
-import org.gvozdev.pj.ui.tools.PJTools;
+import org.gvozdev.pj.ui.PJMainWindow;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import java.awt.BorderLayout;
 
+/**
+ * Главный класс, который реализует точку входа в приложение PhotoJockey:
+ * инициализация библиотеки OpenCV,
+ * инициализация FlatLaf (Flat Look anf Feel),
+ * создание контекста Spring,
+ * отображение главного окна.
+ */
 public class PJApp {
-    private static final int DEFAULT_WIDTH = 1280;
-    private static final int DEFAULT_HEIGHT = 720;
-
-    private final JFrame frame;
-    private final PJEditorTabs tabs;
-    private final PJTools tools;
-
-    public PJApp() {
-        frame = new JFrame("PhotoJockey");
-        frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        frame.setLayout(new BorderLayout());
-
-        PJMainMenu.create(this).show();
-        tabs = new PJEditorTabs();
-        frame.add(tabs, BorderLayout.CENTER);
-        tools = PJTools.create(this);
-        tools.show();
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
-
     public static void main(String[] args) {
         OpenCV.loadLocally();
         FlatCarbonIJTheme.setup();
-        SwingUtilities.invokeLater(PJApp::new);
-    }
 
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public PJEditorTabs getTabs() {
-        return tabs;
-    }
-
-    public PJTools getTools() {
-        return tools;
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring/AppContext.xml");
+        PJMainWindow mainWindow = context.getBean("mainWindow", PJMainWindow.class);
+        SwingUtilities.invokeLater(mainWindow::show);
     }
 }

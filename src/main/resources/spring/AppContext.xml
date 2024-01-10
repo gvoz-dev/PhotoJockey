@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="mainWindow" class="org.gvozdev.pj.ui.PJMainWindow">
+        <constructor-arg name="width" value="1280"/>
+        <constructor-arg name="height" value="720"/>
+        <constructor-arg name="mainMenu" ref="mainMenu"/>
+        <constructor-arg name="editorTabs" ref="editorTabs"/>
+        <constructor-arg name="tools" ref="tools"/>
+    </bean>
+
+    <bean id="mainMenu" class="org.gvozdev.pj.ui.menu.PJMainMenu"/>
+    <bean id="editorTabs" class="org.gvozdev.pj.ui.editor.PJEditorTabs"/>
+    <bean id="tools" class="org.gvozdev.pj.ui.tools.PJTools"/>
+</beans>

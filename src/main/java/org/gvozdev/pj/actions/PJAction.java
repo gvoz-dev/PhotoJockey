@@ -1,21 +1,21 @@
 package org.gvozdev.pj.actions;
 
-import org.gvozdev.pj.PJApp;
+import org.gvozdev.pj.ui.PJMainWindow;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
 public class PJAction extends AbstractAction {
-  protected PJApp app;
+    protected PJMainWindow app;
 
-  public PJAction() {
-  }
+    public PJAction() {
+    }
 
-  public PJAction(PJApp app) {
-    this.app = app;
-  }
+    public PJAction(PJMainWindow app) {
+        this.app = app;
+    }
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
-  }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+    }
 }

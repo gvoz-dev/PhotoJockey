@@ -2,9 +2,9 @@ package org.gvozdev.pj.actions.filters;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.gvozdev.pj.PJApp;
 import org.gvozdev.pj.actions.PJAction;
 import org.gvozdev.pj.processing.filters.ImageFilter;
+import org.gvozdev.pj.ui.PJMainWindow;
 import org.gvozdev.pj.ui.editor.PJEditor;
 
 import java.awt.event.ActionEvent;
@@ -18,13 +18,13 @@ public class ColorFilterAction extends PJAction {
 
     private static final String PACKAGE = "org.gvozdev.pj.processing.filters.color";
 
-    public ColorFilterAction(PJApp app) {
+    public ColorFilterAction(PJMainWindow app) {
         super(app);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var editorOptional = app.getTabs().getSelectedEditor();
+        var editorOptional = app.getEditorTabs().getSelectedEditor();
         editorOptional.ifPresent(pjEditor -> useFilter(pjEditor, e.getActionCommand()));
     }
 

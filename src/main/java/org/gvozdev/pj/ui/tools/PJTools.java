@@ -1,64 +1,54 @@
 package org.gvozdev.pj.ui.tools;
 
-import org.gvozdev.pj.PJApp;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JToolBar;
-import java.awt.BorderLayout;
 import java.awt.Color;
 
 public class PJTools {
-  private final PJApp app;
-  private final JToolBar toolBar;
-  private ColorPanel colorPanel;
-  private SizePanel sizePanel;
+    public JToolBar getToolBar() {
+        return toolBar;
+    }
 
-  private PJTools(PJApp app) {
-    this.app = app;
+    private final JToolBar toolBar;
+    private ColorPanel colorPanel;
+    private SizePanel sizePanel;
 
-    toolBar = new JToolBar("Tools", JToolBar.VERTICAL);
-    toolBar.setLayout(new BoxLayout(toolBar, BoxLayout.Y_AXIS));
-    toolBar.setFloatable(true);
+    public PJTools() {
+        toolBar = new JToolBar("Tools", JToolBar.VERTICAL);
+        toolBar.setLayout(new BoxLayout(toolBar, BoxLayout.Y_AXIS));
+        toolBar.setFloatable(true);
 
-    int strutHeight = 25;
-    toolBar.add(Box.createVerticalStrut(strutHeight));
-    addColorPanel();
-    toolBar.add(Box.createVerticalStrut(strutHeight));
-    addSizePanel();
-  }
+        int strutHeight = 25;
+        toolBar.add(Box.createVerticalStrut(strutHeight));
+        addColorPanel();
+        toolBar.add(Box.createVerticalStrut(strutHeight));
+        addSizePanel();
+    }
 
-  public static PJTools create(PJApp app) {
-    return new PJTools(app);
-  }
+    private void addColorPanel() {
+        colorPanel = new ColorPanel();
+        toolBar.add(colorPanel);
+    }
 
-  public void show() {
-    app.getFrame().add(toolBar, BorderLayout.EAST);
-  }
+    private void addSizePanel() {
+        sizePanel = new SizePanel();
+        toolBar.add(sizePanel);
+    }
 
-  private void addColorPanel() {
-    colorPanel = new ColorPanel();
-    toolBar.add(colorPanel);
-  }
+    public Color getColor1() {
+        return colorPanel.getToolColor1();
+    }
 
-  private void addSizePanel() {
-    sizePanel = new SizePanel();
-    toolBar.add(sizePanel);
-  }
+    public Color getColor2() {
+        return colorPanel.getToolColor2();
+    }
 
-  public Color getColor1() {
-    return colorPanel.getToolColor1();
-  }
+    public void swapColors() {
+        colorPanel.swapColors();
+    }
 
-  public Color getColor2() {
-    return colorPanel.getToolColor2();
-  }
-
-  public void swapColors() {
-    colorPanel.swapColors();
-  }
-
-  public int getSize() {
-    return sizePanel.getToolSize();
-  }
+    public int getSize() {
+        return sizePanel.getToolSize();
+    }
 }
