@@ -1,12 +1,12 @@
 package org.gvozdev.pj.actions;
 
-import org.gvozdev.pj.ui.PJMainWindow;
+import org.gvozdev.pj.ui.main.MainWindow;
 
 import java.awt.event.ActionEvent;
 
 public class ExitAction extends PJAction {
-    public ExitAction(PJMainWindow app) {
-        super(app);
+    public ExitAction(MainWindow<?> mainWindow) {
+        super(mainWindow);
     }
 
     @Override

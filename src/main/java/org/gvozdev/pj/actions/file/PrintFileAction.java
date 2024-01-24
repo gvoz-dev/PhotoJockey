@@ -3,8 +3,8 @@ package org.gvozdev.pj.actions.file;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.gvozdev.pj.actions.PJAction;
-import org.gvozdev.pj.ui.PJMainWindow;
-import org.gvozdev.pj.ui.editor.PJEditor;
+import org.gvozdev.pj.ui.editor.Editor;
+import org.gvozdev.pj.ui.main.MainWindow;
 
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -12,21 +12,22 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.lang.invoke.MethodHandles;
 
 public class PrintFileAction extends PJAction {
-    private static final Logger logger = LogManager.getLogger(PrintFileAction.class);
+    private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
-    public PrintFileAction(PJMainWindow app) {
-        super(app);
+    public PrintFileAction(MainWindow mainWindow) {
+        super(mainWindow);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var editorOptional = app.getEditorTabs().getSelectedEditor();
+        var editorOptional = mainWindow.editorTabs().getSelectedEditor();
         editorOptional.ifPresent(this::printFile);
     }
 
-    public void printFile(PJEditor editor) {
+    public void printFile(Editor editor) {
         PrinterJob printerJob = PrinterJob.getPrinterJob();
 
         if (printerJob.printDialog()) {
@@ -38,7 +39,7 @@ public class PrintFileAction extends PJAction {
                 } else {
                     Graphics2D g2d = (Graphics2D) graphics;
                     g2d.translate(pf.getImageableX(), pf.getImageableY());
-                    var img = editor.getImg();
+                    var img = editor.getImage();
                     if (img != null) {
                         var s = pf.getImageableWidth() / img.getWidth();
                         g2d.scale(s, s);
@@ -52,9 +53,9 @@ public class PrintFileAction extends PJAction {
 
             try {
                 printerJob.print();
-                logger.info(String.format("Image '%s' printed.", editor.getFileName()));
+                LOGGER.info(String.format("Image '%s' printed.", editor.getName()));
             } catch (PrinterException e) {
-                logger.error("Image print error:", e);
+                LOGGER.error("Image print error:", e);
             }
         }
     }

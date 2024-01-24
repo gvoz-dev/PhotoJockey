@@ -2,7 +2,7 @@ package org.gvozdev.pj;
 
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
 import nu.pattern.OpenCV;
-import org.gvozdev.pj.ui.PJMainWindow;
+import org.gvozdev.pj.ui.main.PJMainWindow;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

@@ -3,15 +3,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="mainWindow" class="org.gvozdev.pj.ui.PJMainWindow">
+    <bean id="mainWindow" class="org.gvozdev.pj.ui.main.PJMainWindow">
         <constructor-arg name="width" value="1280"/>
         <constructor-arg name="height" value="720"/>
         <constructor-arg name="mainMenu" ref="mainMenu"/>
         <constructor-arg name="editorTabs" ref="editorTabs"/>
-        <constructor-arg name="tools" ref="tools"/>
+        <constructor-arg name="drawingTools" ref="drawingTools"/>
     </bean>
 
-    <bean id="mainMenu" class="org.gvozdev.pj.ui.menu.PJMainMenu"/>
+    <bean id="mainMenu" class="org.gvozdev.pj.ui.menu.PJMainMenu">
+        <constructor-arg name="xmlConfigFile" value="classpath:ui/MainMenu.xml"/>
+    </bean>
+
     <bean id="editorTabs" class="org.gvozdev.pj.ui.editor.PJEditorTabs"/>
-    <bean id="tools" class="org.gvozdev.pj.ui.tools.PJTools"/>
+
+    <bean id="drawingTools" class="org.gvozdev.pj.ui.toolbar.PJDrawingTools"/>
 </beans>

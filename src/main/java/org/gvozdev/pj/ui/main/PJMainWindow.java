@@ -1,18 +1,24 @@
-package org.gvozdev.pj.ui;
+package org.gvozdev.pj.ui.main;
 
-import org.gvozdev.pj.ui.editor.PJEditorTabs;
-import org.gvozdev.pj.ui.menu.PJMainMenu;
-import org.gvozdev.pj.ui.tools.PJTools;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.gvozdev.pj.ui.editor.EditorTabs;
+import org.gvozdev.pj.ui.menu.MainMenu;
+import org.gvozdev.pj.ui.toolbar.DrawingTools;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import java.awt.BorderLayout;
+import java.lang.invoke.MethodHandles;
 
 /**
  * Класс главного окна приложения PhotoJockey.
  *
  * @author Roman Gvozdev
  */
-public class PJMainWindow {
+public class PJMainWindow implements MainWindow<JFrame> {
+    private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
 
@@ -20,9 +26,9 @@ public class PJMainWindow {
     private int height;
 
     private JFrame frame;
-    private final PJMainMenu mainMenu;
-    private final PJEditorTabs editorTabs;
-    private final PJTools tools;
+    private final MainMenu<?, ?> mainMenu;
+    private final EditorTabs<?> editorTabs;
+    private final DrawingTools<?> tools;
 
     /**
      * Создаёт главное окно с размерами по умолчанию.
@@ -31,9 +37,9 @@ public class PJMainWindow {
      * @param editorTabs ссылка на вкладки редактора изображений
      * @param tools      ссылка на панель инструментов
      */
-    public PJMainWindow(PJMainMenu mainMenu,
-                        PJEditorTabs editorTabs,
-                        PJTools tools) {
+    public PJMainWindow(MainMenu<?, ?> mainMenu,
+                        EditorTabs<?> editorTabs,
+                        DrawingTools<?> tools) {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT, mainMenu, editorTabs, tools);
     }
 
@@ -47,9 +53,9 @@ public class PJMainWindow {
      * @param tools      ссылка на панель инструментов
      */
     public PJMainWindow(int width, int height,
-                        PJMainMenu mainMenu,
-                        PJEditorTabs editorTabs,
-                        PJTools tools) {
+                        MainMenu<?, ?> mainMenu,
+                        EditorTabs<?> editorTabs,
+                        DrawingTools<?> tools) {
         this.width = width;
         this.height = height;
         this.mainMenu = mainMenu;
@@ -60,17 +66,33 @@ public class PJMainWindow {
     /**
      * Отображает главное окно.
      */
+    @Override
     public void show() {
         frame = new JFrame("PhotoJockey");
         frame.setSize(width, height);
 
         var layout = new BorderLayout();
         frame.setLayout(layout);
-        frame.add(editorTabs, BorderLayout.CENTER);
-        frame.add(tools.getToolBar(), BorderLayout.EAST);
+
+        if (editorTabs.tabsComponent() instanceof JComponent tabsComponent) {
+            frame.add(tabsComponent, BorderLayout.CENTER);
+        } else {
+            LOGGER.error("This tabs component type is not supported");
+        }
+
+        tools.init(this);
+        if (tools.toolBarComponent() instanceof JComponent toolbarComponent) {
+            frame.add(toolbarComponent, BorderLayout.EAST);
+        } else {
+            LOGGER.error("This toolbar type is not supported");
+        }
 
         mainMenu.init(this);
-        frame.setJMenuBar(mainMenu.getMenuBar());
+        if (mainMenu.menuBar() instanceof JMenuBar menuComponent) {
+            frame.setJMenuBar(menuComponent);
+        } else {
+            LOGGER.error("This menu type is not supported");
+        }
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -81,6 +103,7 @@ public class PJMainWindow {
      *
      * @return ширина окна
      */
+    @Override
     public int getWidth() {
         width = frame.getWidth();
         return width;
@@ -91,6 +114,7 @@ public class PJMainWindow {
      *
      * @param width ширина окна
      */
+    @Override
     public void setWidth(int width) {
         this.width = width;
         frame.setSize(this.width, this.height);
@@ -101,6 +125,7 @@ public class PJMainWindow {
      *
      * @return высота окна
      */
+    @Override
     public int getHeight() {
         height = frame.getHeight();
         return height;
@@ -111,6 +136,7 @@ public class PJMainWindow {
      *
      * @param height высота окна
      */
+    @Override
     public void setHeight(int height) {
         this.height = height;
         frame.setSize(this.width, this.height);
@@ -121,8 +147,19 @@ public class PJMainWindow {
      *
      * @return фрейм окна
      */
-    public JFrame getFrame() {
+    @Override
+    public JFrame frame() {
         return frame;
+    }
+
+    /**
+     * Возвращает главное меню приложения.
+     *
+     * @return главное меню
+     */
+    @Override
+    public MainMenu<?, ?> mainMenu() {
+        return mainMenu;
     }
 
     /**
@@ -130,7 +167,8 @@ public class PJMainWindow {
      *
      * @return вкладки редакторов
      */
-    public PJEditorTabs getEditorTabs() {
+    @Override
+    public EditorTabs<?> editorTabs() {
         return editorTabs;
     }
 
@@ -139,7 +177,8 @@ public class PJMainWindow {
      *
      * @return панель инструментов
      */
-    public PJTools getTools() {
+    @Override
+    public DrawingTools<?> drawingTools() {
         return tools;
     }
 }
