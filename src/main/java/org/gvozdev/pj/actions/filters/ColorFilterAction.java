@@ -13,29 +13,46 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * Действие фильтрации компонентов цвета изображения.
+ *
+ * @author Roman Gvozdev
  */
 public class ColorFilterAction extends PJAction {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
-
     private static final String PACKAGE = "org.gvozdev.pj.processing.filters.color";
 
-    public ColorFilterAction(MainWindow mainWindow) {
+    /**
+     * Создаёт действие фильтрации компонентов цвета изображения.
+     *
+     * @param mainWindow ссылка на главное окно приложения
+     */
+    public ColorFilterAction(MainWindow<?> mainWindow) {
         super(mainWindow);
     }
 
+    /**
+     * Обрабатывает действие.
+     *
+     * @param e событие, подлежащее обработке
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         var editorOptional = mainWindow.editorTabs().getSelectedEditor();
         editorOptional.ifPresent(editor -> useFilter(editor, e.getActionCommand()));
     }
 
-    public void useFilter(Editor editor, String filterName) {
+    /**
+     * Применяет фильтр к изображению в редакторе.
+     *
+     * @param editor     редактор изображений
+     * @param filterName название фильтра
+     */
+    private void useFilter(Editor<?> editor, String filterName) {
         try {
             var className = PACKAGE + "." + filterName;
             ImageFilter imageFilter = (ImageFilter) (Class.forName(className)).getConstructor().newInstance();
             var img = editor.getImage();
             editor.setImage(imageFilter.filter(img));
-            LOGGER.debug("{} filter applied to '{}'.", filterName, editor.getName());
+            LOGGER.debug("{} filter applied to '{}'", filterName, editor.getName());
         } catch (InstantiationException |
                  IllegalAccessException |
                  InvocationTargetException |

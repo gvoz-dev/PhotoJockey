@@ -15,23 +15,40 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.Optional;
 
+/**
+ * Действие открытия файла изображения.
+ *
+ * @author Roman Gvozdev
+ */
 public class OpenFileAction extends PJAction {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
-    public OpenFileAction(MainWindow<? extends JFrame> mainWindow) {
+    /**
+     * Создаёт действие открытия файла изображения.
+     *
+     * @param mainWindow ссылка на главное окно приложения
+     */
+    public OpenFileAction(MainWindow<?> mainWindow) {
         super(mainWindow);
     }
 
+    /**
+     * Обрабатывает действие.
+     *
+     * @param e событие, подлежащее обработке
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Optional<PJEditor> editorOptional = openFile();
         editorOptional.ifPresent(pjEditor -> mainWindow.editorTabs().addEditorTab(pjEditor));
     }
 
-    public Optional<PJEditor> openFile() {
+    /**
+     * Открывает файл изображения. Возвращает {@link Optional} редактора с открытым файлом.
+     */
+    protected Optional<PJEditor> openFile() {
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogType(JFileChooser.OPEN_DIALOG);
-
         if (mainWindow.frame() instanceof JFrame frame) {
             int res = chooser.showOpenDialog(frame);
             if (res == JFileChooser.APPROVE_OPTION) {
@@ -44,7 +61,7 @@ public class OpenFileAction extends PJAction {
                         editor.init();
                         editor.setImage(img);
                         editor.setName(fileName);
-                        LOGGER.info(String.format("Image '%s' loaded.", fileName));
+                        LOGGER.info("Image '{}' loaded", fileName);
                         return Optional.of(editor);
                     }
                 } catch (IOException e) {
@@ -52,7 +69,6 @@ public class OpenFileAction extends PJAction {
                 }
             }
         }
-
         return Optional.empty();
     }
 }

@@ -40,7 +40,7 @@
         />
         <separator/>
         <item id="Exit"
-              action="org.gvozdev.pj.actions.ExitAction"
+              action="org.gvozdev.pj.actions.common.ExitAction"
               text="Exit"
               icon="icons/menu/exit/exit_dark.svg"
               description="Quit"
@@ -76,7 +76,7 @@
         />
     </menu>
     <menu id="FiltersMenu" text="Filters" mnemonic="S">
-        <menu id="StandardFilters" text="Standard" mnemonic="S">
+        <menu id="StandardFilters" text="Color" mnemonic="S">
             <item id="PJGrayscale"
                   action="org.gvozdev.pj.actions.filters.ColorFilterAction"
                   text="Grayscale"
@@ -96,7 +96,7 @@
     </menu>
     <menu id="HelpMenu" text="Help" mnemonic="H">
         <item id="About"
-              action="org.gvozdev.pj.actions.AboutAction"
+              action="org.gvozdev.pj.actions.common.AboutAction"
               text="About"
               icon="icons/menu/help/help_dark.svg"
               description="Show info about PhotoJockey"

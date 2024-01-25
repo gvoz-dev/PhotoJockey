@@ -14,25 +14,43 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.lang.invoke.MethodHandles;
 
+/**
+ * Действие печати файла изображения.
+ *
+ * @author Roman Gvozdev
+ */
 public class PrintFileAction extends PJAction {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
-    public PrintFileAction(MainWindow mainWindow) {
+    /**
+     * Создаёт действие печати файла изображения.
+     *
+     * @param mainWindow ссылка на главное окно приложения
+     */
+    public PrintFileAction(MainWindow<?> mainWindow) {
         super(mainWindow);
     }
 
+    /**
+     * Обрабатывает действие.
+     *
+     * @param e событие, подлежащее обработке
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         var editorOptional = mainWindow.editorTabs().getSelectedEditor();
-        editorOptional.ifPresent(this::printFile);
+        editorOptional.ifPresent(this::printImage);
     }
 
-    public void printFile(Editor editor) {
+    /**
+     * Печатает изображение.
+     *
+     * @param editor редактор изображения
+     */
+    public void printImage(Editor<?> editor) {
         PrinterJob printerJob = PrinterJob.getPrinterJob();
-
         if (printerJob.printDialog()) {
             PageFormat pageFormat = printerJob.pageDialog(printerJob.defaultPage());
-
             printerJob.setPrintable((graphics, pf, pageIndex) -> {
                 if (pageIndex != 0) {
                     return Printable.NO_SUCH_PAGE;
@@ -45,7 +63,7 @@ public class PrintFileAction extends PJAction {
                         g2d.scale(s, s);
                         g2d.drawImage(img, 0, 0, null);
                     } else {
-                        g2d.drawString("Oops: img == null!", 10, 10);
+                        g2d.drawString("Oops: image is null!", 10, 10);
                     }
                     return Printable.PAGE_EXISTS;
                 }
@@ -53,7 +71,7 @@ public class PrintFileAction extends PJAction {
 
             try {
                 printerJob.print();
-                LOGGER.info(String.format("Image '%s' printed.", editor.getName()));
+                LOGGER.info("Image '{}' printed", editor.getName());
             } catch (PrinterException e) {
                 LOGGER.error("Image print error:", e);
             }

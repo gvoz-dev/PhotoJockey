@@ -15,13 +15,28 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.Optional;
 
+/**
+ * Действие сохранения файла изображения.
+ *
+ * @author Roman Gvozdev
+ */
 public class SaveFileAction extends PJAction {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
-    public SaveFileAction(MainWindow<? extends JFrame> mainWindow) {
+    /**
+     * Создаёт действие сохранения файла изображения.
+     *
+     * @param mainWindow ссылка на главное окно приложения
+     */
+    public SaveFileAction(MainWindow<?> mainWindow) {
         super(mainWindow);
     }
 
+    /**
+     * Обрабатывает действие.
+     *
+     * @param e событие, подлежащее обработке
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         var editorOptional = mainWindow.editorTabs().getSelectedEditor();
@@ -31,7 +46,12 @@ public class SaveFileAction extends PJAction {
         }
     }
 
-    public Optional<String> saveFile(Editor editor) {
+    /**
+     * Сохраняет файл изображение.
+     *
+     * @param editor редактор изображения
+     */
+    public Optional<String> saveFile(Editor<?> editor) {
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogType(JFileChooser.SAVE_DIALOG);
         File file = new File(editor.getName());
@@ -39,7 +59,6 @@ public class SaveFileAction extends PJAction {
 
         if (mainWindow.frame() instanceof JFrame frame) {
             int res = chooser.showSaveDialog(frame);
-
             if (res == JFileChooser.APPROVE_OPTION) {
                 file = chooser.getSelectedFile();
                 try {
@@ -48,7 +67,7 @@ public class SaveFileAction extends PJAction {
                         ImageIO.write(img, "png", file);
                         var fileName = file.getName();
                         editor.setName(fileName);
-                        LOGGER.info(String.format("Image '%s' saved.", fileName));
+                        LOGGER.info("Image '{}' saved", fileName);
                         return Optional.of(fileName);
                     }
                 } catch (IOException e) {

@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
 
 /**
@@ -23,7 +24,7 @@ import java.net.URL;
  * @author Roman Gvozdev
  */
 public final class SVGImageLoader {
-    private static final Logger LOGGER = LogManager.getLogger(SVGImageLoader.class);
+    private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
 
     private SVGImageLoader() {
         throw new IllegalStateException("Utility class");
@@ -40,7 +41,7 @@ public final class SVGImageLoader {
         }
         BufferedImage image = transcoder.getImage();
         var fileName = new File(url.getFile()).getName();
-        LOGGER.info(String.format("Read '%s' SVG image", fileName));
+        LOGGER.info("Read {} SVG image", fileName);
         return image;
     }
 

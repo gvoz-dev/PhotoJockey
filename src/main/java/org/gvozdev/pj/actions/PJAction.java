@@ -3,24 +3,43 @@ package org.gvozdev.pj.actions;
 import org.gvozdev.pj.ui.main.MainWindow;
 
 import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
 
-public class PJAction extends AbstractAction {
+/**
+ * Абстрактное действие PhotoJockey.
+ *
+ * @author Roman Gvozdev
+ */
+public abstract class PJAction extends AbstractAction {
     protected MainWindow<?> mainWindow;
 
+    /**
+     * Создаёт действие PhotoJockey.
+     */
     public PJAction() {
     }
 
+    /**
+     * Создаёт действие PhotoJockey.
+     *
+     * @param mainWindow ссылка на главное окно приложения
+     */
     public PJAction(MainWindow<?> mainWindow) {
         this.mainWindow = mainWindow;
     }
 
     /**
-     * Обрабатывает действие.
-     *
-     * @param e событие, подлежащее обработке
+     * Возвращает ссылку на главное окно приложения.
      */
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    public MainWindow<?> getMainWindow() {
+        return mainWindow;
+    }
+
+    /**
+     * Устанавливает ссылку на главное окно приложения.
+     *
+     * @param mainWindow ссылка на главное окно приложения
+     */
+    public void setMainWindow(MainWindow<?> mainWindow) {
+        this.mainWindow = mainWindow;
     }
 }

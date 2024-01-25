@@ -14,6 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -235,7 +236,12 @@ public class XMLMenuHandler extends DefaultHandler {
                 throw new RuntimeException(e);
             }
         } else {
-            action = new PJAction();
+            action = new PJAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Пустая реализация действия
+                }
+            };
         }
         return action;
     }
