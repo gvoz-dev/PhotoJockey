@@ -4,15 +4,15 @@ import org.gvozdev.pj.actions.tools.SelectColorAction;
 import org.gvozdev.pj.actions.tools.SwapColorsAction;
 import org.gvozdev.pj.ui.main.MainWindow;
 
+import javax.swing.Action;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import static org.gvozdev.pj.utils.SwingUtils.createImageIcon;
+import static org.gvozdev.pj.utils.SwingUtils.setComponentSize;
 
 /**
  * Панель выбора цвета инструмента рисования.
@@ -20,6 +20,11 @@ import java.awt.event.ActionListener;
  * @author Roman Gvozdev
  */
 public class ColorPanel extends JPanel {
+    private static final int COLOR_BUTTON_WIDTH = 56;
+    private static final int COLOR_BUTTON_HEIGHT = 56;
+    private static final int SWAP_BUTTON_WIDTH = 28;
+    private static final int SWAP_BUTTON_HEIGHT = 28;
+
     private final JButton primaryColorButton = new JButton();
     private final JButton secondaryColorButton = new JButton();
     private final JButton swapColorButton = new JButton();
@@ -49,15 +54,13 @@ public class ColorPanel extends JPanel {
      * Добавляет кнопки управления цветом на панель.
      */
     private void addColorButtons() {
-        var d = new Dimension(50, 50);
-
-        primaryColorButton.setPreferredSize(d);
-        primaryColorButton.setMaximumSize(d);
+        setComponentSize(primaryColorButton, COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT);
         primaryColorButton.setBackground(primaryColor);
 
-        secondaryColorButton.setPreferredSize(d);
-        secondaryColorButton.setMaximumSize(d);
+        setComponentSize(secondaryColorButton, COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT);
         secondaryColorButton.setBackground(secondaryColor);
+
+        setComponentSize(swapColorButton, SWAP_BUTTON_WIDTH, SWAP_BUTTON_HEIGHT);
 
         add(primaryColorButton);
         add(swapColorButton);
@@ -72,7 +75,11 @@ public class ColorPanel extends JPanel {
     private void setColorActions(MainWindow<?> mainWindow) {
         primaryColorButton.setAction(new SelectColorAction.SelectPrimaryColorAction(mainWindow));
         secondaryColorButton.setAction(new SelectColorAction.SelectSecondaryColorAction(mainWindow));
-        swapColorButton.setAction(new SwapColorsAction(mainWindow));
+
+        Action swapColorsAction = new SwapColorsAction(mainWindow);
+        ImageIcon icon = createImageIcon("icons/tools/swap.png", SWAP_BUTTON_WIDTH - 6, SWAP_BUTTON_HEIGHT - 6);
+        swapColorsAction.putValue(Action.LARGE_ICON_KEY, icon);
+        swapColorButton.setAction(swapColorsAction);
     }
 
     /**
@@ -112,67 +119,5 @@ public class ColorPanel extends JPanel {
         Color tmpColor = primaryColor;
         setPrimaryColor(secondaryColor);
         setSecondaryColor(tmpColor);
-    }
-
-    /**
-     * Добавляет слушатели кнопок.
-     */
-    @Deprecated
-    private void addListeners() {
-        ActionListener colorButtonListener = new ColorButtonListener();
-        primaryColorButton.addActionListener(colorButtonListener);
-        secondaryColorButton.addActionListener(colorButtonListener);
-    }
-
-    /**
-     * Слушатель кнопок основного и дополнительного цветов.
-     */
-    @Deprecated
-    private class ColorButtonListener implements ActionListener {
-        private final ColorDialog colorDialog = new ColorDialog();
-        private final ChangeListener changePrimaryColor = this::changePrimaryColor;
-        private final ChangeListener changeSecondaryColor = this::changeSecondaryColor;
-
-        /**
-         * Обрабатывает нажатие кнопки основного или дополнительного цвета.
-         *
-         * @param event событие нажатия кнопки
-         */
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            var selectionModel = colorDialog.colorChooser().getSelectionModel();
-            // Удаление обработчиков изменения цвета
-            selectionModel.removeChangeListener(changePrimaryColor);
-            selectionModel.removeChangeListener(changeSecondaryColor);
-
-            if (event.getSource() == primaryColorButton) {
-                selectionModel.addChangeListener(changePrimaryColor);
-            } else {
-                selectionModel.addChangeListener(changeSecondaryColor);
-            }
-            colorDialog.setVisible(true);
-        }
-
-        /**
-         * Обрабатывает событие изменения основного цвета.
-         *
-         * @param event событие изменения цвета
-         */
-        private void changePrimaryColor(ChangeEvent event) {
-            var color = colorDialog.colorChooser().getColor();
-            primaryColor = color;
-            primaryColorButton.setBackground(color);
-        }
-
-        /**
-         * Обрабатывает событие изменения дополнительного цвета.
-         *
-         * @param event событие изменения цвета
-         */
-        private void changeSecondaryColor(ChangeEvent event) {
-            var color = colorDialog.colorChooser().getColor();
-            secondaryColor = color;
-            secondaryColorButton.setBackground(color);
-        }
     }
 }

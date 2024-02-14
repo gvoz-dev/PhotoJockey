@@ -6,17 +6,17 @@ import org.gvozdev.pj.ui.main.MainWindow;
 import java.awt.event.ActionEvent;
 
 /**
- * Действие смены основного и дополнительного цветов.
+ * Действие выбора инструмента "Заливка цветом".
  *
  * @author Roman Gvozdev
  */
-public class SwapColorsAction extends PJAction {
+public class SelectColorFillAction extends PJAction {
     /**
-     * Создаёт действие смены цветов.
+     * Создаёт действие выбора инструмента "Заливка цветом".
      *
      * @param mainWindow ссылка на главное окно приложения
      */
-    public SwapColorsAction(MainWindow<?> mainWindow) {
+    public SelectColorFillAction(MainWindow<?> mainWindow) {
         super(mainWindow);
     }
 
@@ -27,6 +27,6 @@ public class SwapColorsAction extends PJAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        mainWindow.drawingTools().swapColors();
+
     }
 }

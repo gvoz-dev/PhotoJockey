@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 public class AboutAction extends PJAction {
     private static final String INFO = "PhotoJockey 2024 Prototype";
     private static final String AUTHOR = "Roman Gvozdev: https://github.com/gvoz-dev";
+    private static final String ICONS = "Icons by Icons8";
 
     /**
      * Создаёт действие показа информационного сообщения "О программе".
@@ -32,7 +33,7 @@ public class AboutAction extends PJAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        final var message = INFO + '\n' + AUTHOR;
+        final var message = INFO + '\n' + AUTHOR + '\n' + ICONS;
 
         if (mainWindow.frame() instanceof JFrame frame) {
             JOptionPane.showMessageDialog(frame, message, "About", JOptionPane.INFORMATION_MESSAGE);

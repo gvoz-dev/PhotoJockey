@@ -1,6 +1,6 @@
 package org.gvozdev.pj;
 
-import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme;
 import nu.pattern.OpenCV;
 import org.gvozdev.pj.ui.main.PJMainWindow;
 import org.springframework.context.ApplicationContext;
@@ -18,7 +18,7 @@ import javax.swing.SwingUtilities;
 public class PJApp {
     public static void main(String[] args) {
         OpenCV.loadLocally();
-        FlatCarbonIJTheme.setup();
+        FlatAtomOneDarkIJTheme.setup();
 
         ApplicationContext context = new ClassPathXmlApplicationContext("spring/AppContext.xml");
         PJMainWindow mainWindow = context.getBean("mainWindow", PJMainWindow.class);

@@ -8,7 +8,8 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import java.awt.Dimension;
+
+import static org.gvozdev.pj.utils.SwingUtils.setComponentSize;
 
 /**
  * Панель выбора размера инструмента рисования.
@@ -16,9 +17,9 @@ import java.awt.Dimension;
  * @author Roman Gvozdev
  */
 public class SizePanel extends JPanel {
-    private static final int DEFAULT_SIZE = 5;
     private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 100;
+    private static final int DEFAULT_SIZE = 5;
     private static final int STEP = 1;
 
     private final JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL);
@@ -46,9 +47,7 @@ public class SizePanel extends JPanel {
      * Добавляет слайдер изменения размера на панель.
      */
     private void addSizeSlider() {
-        var d = new Dimension(120, 30);
-        sizeSlider.setPreferredSize(d);
-        sizeSlider.setMaximumSize(d);
+        setComponentSize(sizeSlider, 100, 30);
 
         BoundedRangeModel model = new DefaultBoundedRangeModel(toolSize, 0, MIN_SIZE, MAX_SIZE);
         sizeSlider.setModel(model);
@@ -65,9 +64,7 @@ public class SizePanel extends JPanel {
      * Добавляет спиннер изменения размера на панель.
      */
     private void addSizeSpinner() {
-        var d = new Dimension(60, 30);
-        sizeSpinner.setPreferredSize(d);
-        sizeSpinner.setMaximumSize(d);
+        setComponentSize(sizeSpinner, 60, 30);
 
         SpinnerModel model = new SpinnerNumberModel(toolSize, MIN_SIZE, MAX_SIZE, STEP);
         sizeSpinner.setModel(model);

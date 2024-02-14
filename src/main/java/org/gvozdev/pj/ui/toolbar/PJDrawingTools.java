@@ -3,6 +3,7 @@ package org.gvozdev.pj.ui.toolbar;
 import org.gvozdev.pj.ui.main.MainWindow;
 import org.gvozdev.pj.ui.toolbar.swing.ColorPanel;
 import org.gvozdev.pj.ui.toolbar.swing.SizePanel;
+import org.gvozdev.pj.ui.toolbar.swing.ToolsPanel;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,6 +18,7 @@ import java.awt.Color;
 public class PJDrawingTools implements DrawingTools<JToolBar> {
     private JToolBar toolBar;
     private ColorPanel colorPanel;
+    private ToolsPanel toolsPanel;
     private SizePanel sizePanel;
 
     /**
@@ -44,6 +46,10 @@ public class PJDrawingTools implements DrawingTools<JToolBar> {
         toolBar.add(Box.createVerticalStrut(strutHeight));
         sizePanel = SizePanel.compose();
         toolBar.add(sizePanel);
+
+        toolBar.add(Box.createVerticalStrut(strutHeight));
+        toolsPanel = ToolsPanel.compose(mainWindow);
+        toolBar.add(toolsPanel);
     }
 
     /**
